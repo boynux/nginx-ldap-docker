@@ -1,0 +1,7 @@
+FROM ubuntu:latest
+
+RUN apt-get install -y libldap-2.4-2 gettext
+ADD nginx /usr/local/nginx
+ADD nginx.sh nginx
+
+ENTRYPOINT ./nginx

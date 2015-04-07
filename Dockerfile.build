@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+RUN apt-get update \
+    && apt-get install -y build-essential \
+    && apt-get build-dep -y nginx
+
+RUN apt-get install -y libldap2-dev
+RUN echo "#!/bin/bash\ncd /src && ./configure --add-module=nginx-auth-ldap && make" > build.sh \
+    && chmod +x build.sh
+
+CMD ./build.sh \
+    && cd /src \
+    && DESTDIR=./nginx  make install
